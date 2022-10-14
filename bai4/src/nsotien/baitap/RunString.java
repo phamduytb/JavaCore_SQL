@@ -55,7 +55,7 @@ public class RunString {
                     return false;
                 }
             }
-            return false;
+            return true ;
         }
         return false;
     }
@@ -67,6 +67,6 @@ public class RunString {
         } else if (ss.equals("095") || ss.equals("094")) {
             return "vina";
         }
-        return "sai";
+        return "uknow";
     }
 }
