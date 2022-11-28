@@ -1,4 +1,4 @@
-package nsotien.bai5.model;
+package nsotien.entity;
 
 public class Chair extends Person {
     private String stuff;

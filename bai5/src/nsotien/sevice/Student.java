@@ -1,8 +1,6 @@
-package nsotien.bai5.school;
+package nsotien.sevice;
 
-import javax.sound.midi.Soundbank;
 import java.util.Scanner;
-import java.util.SortedMap;
 
 public class Student {
     private int id;

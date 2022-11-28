@@ -1,4 +1,4 @@
-package nsotien.bai6.model;
+package nsotien.entity;
 
 import java.util.Scanner;
 

@@ -1,4 +1,4 @@
-package nsotien.bai5.school;
+package nsotien.sevice;
 
 import java.util.Scanner;
 

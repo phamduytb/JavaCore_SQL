@@ -1,4 +1,4 @@
-package nsotien.bai5.model;
+package nsotien.entity;
 
 public class Laptop extends Person {
     private int year;

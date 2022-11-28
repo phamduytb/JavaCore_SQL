@@ -1,13 +1,13 @@
-package nsotien.bai5.main;
+package nsotien.main;
 
-import nsotien.bai5.model.Chair;
-import nsotien.bai5.model.Laptop;
-import nsotien.bai5.model.Table;
+import nsotien.entity.Chair;
+import nsotien.entity.Laptop;
+import nsotien.entity.Table;
 
-import nsotien.bai5.school.Student;
-import nsotien.bai5.school.Teacher;
+import nsotien.sevice.Student;
+import nsotien.sevice.Teacher;
 
-import nsotien.bai5.src.CourseScore;
+import nsotien.sevice.CourseScore;
 
 public class Main {
     public static void main(String[] args) {

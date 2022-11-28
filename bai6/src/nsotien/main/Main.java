@@ -1,8 +1,8 @@
-package nsotien.bai6.main;
+package nsotien.main;
 
 import java.util.Scanner;
 
-import nsotien.bai6.model.School;
+import nsotien.entity.School;
 
 public class Main {
 
