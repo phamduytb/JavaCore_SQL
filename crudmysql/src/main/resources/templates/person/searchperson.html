@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/create_table.css}">
+    <title>TABLE BY NSOTIEN</title>
+</head>
+
+<body>
+<div class="filter">
+    <h2>List Book</h2>
+</div>
+
+<table>
+    <tr>
+        <th>id</th>
+        <th>title</th>
+        <th>price</th>
+        <th>color</th>
+        <th><a th:href="@{/book/create}" style="color:white;">Create<a></th>
+    </tr>
+
+    <tr th:each="book : ${list}">
+        <td th:text="${book.id}"></td>
+        <td th:text="${book.title}"></td>
+        <td th:text="${book.price}"></td>
+        <td th:text="${book.color}"></td>
+
+        <td>
+            <a style="color:black; margin-right: 20px;" th:href="@{'/book/delete?id=' + ${book.id} }">DELETE<a>
+                <a style="color:black;" th:href="@{'/book/update?id=' + ${book.id} }">UPDATE<a>
+        </td>
+    </tr>
+
+</table>
+
+
+</body>
+
+</html>
+
+

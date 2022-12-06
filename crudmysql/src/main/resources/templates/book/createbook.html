@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGIN BY NSOTIEN</title>
+    <link rel="stylesheet" th:href="@{/css/create_input.css}">
+</head>
+
+<body>
+<div class="box">
+    <div class="form">
+
+        <h2>Create Book</h2>
+
+        <form th:action="@{/book/create}" method="post">
+
+
+            <div class="inputbox">
+                <input name="title" required="required">
+                <span> title</span>
+                <i></i>
+            </div>
+
+            <div class="inputbox">
+                <input name="price" required="required">
+                <span> price</span>
+                <i></i>
+            </div>
+
+            <div class="inputbox">
+                <input name="color" required="required">
+                <span> color</span>
+                <i></i>
+            </div>
+
+
+            <div class="links">
+                <a th:href="@{/book/search}">List Book</a>
+            </div>
+
+            <input type="submit" value="Create">
+        </form>
+    </div>
+</div>
+</body>
+</html>
