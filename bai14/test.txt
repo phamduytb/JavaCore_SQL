@@ -1,3 +1,0 @@
-Product{id=1, name='drink', price=5.6}
-Product{id=2, name='food', price=7.0}
-Product{id=3, name='book', price=5.9}
