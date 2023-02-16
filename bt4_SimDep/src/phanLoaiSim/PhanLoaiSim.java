@@ -46,8 +46,9 @@ public class PhanLoaiSim {
 	}
 
 	private static void phanLoaiSim(String phone) {
-		String lucQuy = "^[0-9]{4}[^48]{6}$";
-		
+		String lucQuy = "^[0-9]{4}1{6}$|^[0-9]{4}2{6}$|^[0-9]{4}9{6}$|^[0-9]{4}3{6}$|^[0-9]{4}4{6}$|^[0-9]{4}5{6}$|^[0-9]{4}6{6}$|"
+				+ "^[0-9]{4}7{6}$|";
+//		String tamHoa = "^[0-9]{7}";
 		
 		if(phone.matches(lucQuy)) {
 			System.out.println("Đây là sim lục quý");
@@ -59,7 +60,7 @@ public class PhanLoaiSim {
 	private static void ktNhaMang(String phone) {
 		String regexVietTel = "^03[2|3|4|5|6|7|8|9][0-9]{7}$|^086[0-9]{7}$|^09[6|7|8][0-9]{7}$";
 
-		String regexVinaphone = "^08[1-5]{1}[0-9]{7}$|^088[0-9]{7}$|^09[1|4[0-9]{7}$]";
+		String regexVinaphone = "^08[1-5]{1}[0-9]{7}$|^088[0-9]{7}$|^09[1|4][0-9]{7}$]";
 		if (phone.matches(regexVietTel)) {
 			System.out.println("Số điện thoại thuộc nhà mạng VietTel");
 		} else if (phone.matches(regexVinaphone)) {
