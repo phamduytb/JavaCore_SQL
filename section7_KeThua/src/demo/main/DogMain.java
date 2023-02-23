@@ -11,7 +11,7 @@ public class DogMain {
 		
 		dog.speak();
 		dog1.speak();
-		dog.eat();
+		
 		
 	}
 }
