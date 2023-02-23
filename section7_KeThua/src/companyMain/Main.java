@@ -11,7 +11,11 @@ import company.Tester;
 public class Main {
 	public static void main(String[] args) {
 		
-//		ArrayList<Employee> list = new ArrayList<>();
+		/* Có hai cách làm
+		 * Cách 1 dùng 1 arraylist Employee duy nhất
+		 * Cách 2 mỗi đối tượng dùng 1 arraylist riêng
+		 * */
+		ArrayList<Employee> list = new ArrayList<>();
 		ArrayList<Developer> developers = new ArrayList<>();
 		ArrayList<Leader> leaders = new ArrayList<>();
 		ArrayList<Tester> testers = new ArrayList<>();
@@ -39,15 +43,19 @@ public class Main {
 					
 				case 1: 
 					System.out.println("Nhập thông tin Developer: ");
-					Developer d = new Developer();
-					d.input();
-					developers.add(d);
+//					Developer d = new Developer();
+//					d.input();
+//					developers.add(d);
+					Employee e = new Developer();
+					e.input();
+					list.add(e);
 					break;
 					
 				case 2: 
 					System.out.println("In thông tin Developer: ");
-					for(Developer de : developers) {
-						de.info();
+					for(Employee d : list) {
+						if (d instanceof Developer)
+							d.info();
 					}
 					break;
 					

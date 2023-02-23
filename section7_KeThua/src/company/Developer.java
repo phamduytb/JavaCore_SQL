@@ -25,7 +25,7 @@ public class Developer extends Employee{
 	
 	public void info() {
 		super.info();
-		System.out.println(" programLanguage: " + programLanguage);
+		System.out.println(" |programLanguage: " + programLanguage);
 		
 	}
 }
