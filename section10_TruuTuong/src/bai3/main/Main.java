@@ -45,5 +45,19 @@ public class Main {
 			addressService.info(students[i].getAddress());
 			System.out.println("---------------------");
 		}
+		
+		// In sinh viên có tuổi lớn nhất
+		 int maxAge = 0, index = 0;
+		 for (int i = 0; i < students.length; i++) {
+			 if (students[i].getAge() > maxAge) {
+				 maxAge = students[i].getAge();
+				 index = i;
+			 }
+		 }
+		 
+		 System.out.println("The oldest student: ");
+		 studentService.info(students[index]);
+		 schoolService.info(students[index].getSchool());
+		 addressService.info(students[index].getAddress());
 	}
 }

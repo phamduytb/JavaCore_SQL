@@ -22,7 +22,7 @@ public class SchoolServiceImpl implements SchoolService{
 	}
 
 	public void info(School school) {
-		System.out.println("--------------------");
+		
 		System.out.println("Show infomation of school:");
 		System.out.println(school.getId());
 		System.out.println(school.getName());

@@ -25,7 +25,7 @@ public class AddressServiceImpl implements AddressService{
 	}
 
 	public void info(Address address) {
-		System.out.println("--------------------");
+		
 		System.out.println("show infomation of address:");
 		System.out.println(address.getId());
 		System.out.println(address.getStreet());
