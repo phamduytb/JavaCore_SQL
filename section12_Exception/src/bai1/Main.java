@@ -15,28 +15,25 @@ public class Main {
 		return x + y;
 		
 	}
-
+	
 	private static void input() {
+		System.out.println("Enter the number x: ");
+		x = inputNumber();
+		System.out.println("Enter the number y: ");
+		y = inputNumber();
+	}
+
+	private static int inputNumber() {
 		while (true) {
 			try {
-				
-				System.out.println("Enter the number x: ");
-				x = new Scanner(System.in).nextInt();
-				break;
+				int a = new Scanner(System.in).nextInt();
+				return a;
 			} catch(Exception e) {
 				System.out.println("Only numbers are allowed, please enter again!");
 			}
 		}
 		
-		while (true) {
-			try {
-				System.out.println("Enter the number y: ");
-				y = new Scanner(System.in).nextInt();
-				break;
-			} catch(Exception e) {
-				System.out.println("Only numbers are allowed, please enter again!");
-			}
-		}
+		
 		
 	}
 }
