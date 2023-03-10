@@ -95,7 +95,7 @@ public class DepartmentMain {
 	}
 	private static void searchByName() {
 		System.out.println("--Enter name of department---");
-		String name = new Scanner(System.in).nextLine().toLowerCase();
+		String name = new Scanner(System.in).nextLine().toUpperCase();
 		List<Department> departments = departmentService.searchByName(name);
 		if (departments.size() == 0) {
 			System.out.println("Does not exist the department with name: " + name);

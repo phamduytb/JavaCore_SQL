@@ -8,14 +8,15 @@ import model.Department;
 import model.Employee;
 
 public class EmployeeServiceImpl implements IEmployeeService{
-	//IDepartmentService departmentService = new DepartmentServiceImpl();
-	List<Employee> employees;
+	IDepartmentService departmentService = new DepartmentServiceImpl();
+	List<Object> objects;
+	IFileService fileService = new FileServiceImpl();
 	
 	// Lựa chọn phòng ban cho nhân viên
 	@Override
 	public void choiceDepartment(Employee e) {
 		System.out.println("---List of department name---");
-		List<Department> departments = FileService.readDepartmentList();
+		List<Department> departments = departmentService.readAll();
 		for (Department d : departments) {
 			System.out.println(d.getName());
 		}
@@ -82,14 +83,20 @@ public class EmployeeServiceImpl implements IEmployeeService{
 
 	@Override
 	public List<Employee> readAll() {
-		employees = FileService.readEmployeetList();
+		List<Employee> employees = new ArrayList<>();
+		objects = fileService.readToFile();
+		for (Object o : objects) {
+			if (o instanceof Employee) {
+				employees.add((Employee)o);
+			}
+		}
 		return employees;
 	}
 
 	@Override
 	public List<Employee> searchByName(String name) {
+		List<Employee> employees = readAll();
 		List<Employee> employees1 = new ArrayList<>();
-		employees = FileService.readEmployeetList();
 		for (Employee e : employees) {
 			if (e.getName().equalsIgnoreCase(name)) {
 				employees1.add(e);
@@ -100,8 +107,8 @@ public class EmployeeServiceImpl implements IEmployeeService{
 
 	@Override
 	public Employee searchById(int id) {
+		List<Employee> employees = readAll();
 		
-		employees = FileService.readEmployeetList();
 		for (Employee e : employees) {
 			if (e.getId() == id) {
 				return e;
@@ -112,10 +119,9 @@ public class EmployeeServiceImpl implements IEmployeeService{
 
 	@Override
 	public void create(Employee e) {
-		employees = FileService.readEmployeetList();
-		employees.add(e);
-		FileService.writeEmployeeList(employees);
-		
+		objects = fileService.readToFile();
+		objects.add(e);
+		fileService.writeToFile(objects);
 	}
 
 	@Override
@@ -132,7 +138,7 @@ public class EmployeeServiceImpl implements IEmployeeService{
 			e.setName(name);
 			System.out.println("Choice department's name");
 			choiceDepartment(e);
-			FileService.writeEmployeeList(employees);
+			fileService.writeToFile(objects);
 			return true;
 		}
 	}
@@ -144,8 +150,8 @@ public class EmployeeServiceImpl implements IEmployeeService{
 			System.out.println("Does not exist the employee with the id number: " + id);
 			return false;
 		} else {
-			employees.remove(e);
-			FileService.writeEmployeeList(employees);
+			objects.remove(e);
+			fileService.writeToFile(objects);
 			return true;
 		}
 	}

@@ -7,8 +7,10 @@ import java.util.Scanner;
 import model.Department;
 
 public class DepartmentServiceImpl implements IDepartmentService{
+	
+	private IFileService fileService = new FileServiceImpl();
 
-	private  List<Department> departments;
+	private  List<Object> objects;
 	
 	// Bổ sung hàm khởi tạo ở đây để khi mới đầu chạy app, đọc luôn danh sách department từ file ra
 //	public DepartmentServiceImpl() {
@@ -60,9 +62,19 @@ public class DepartmentServiceImpl implements IDepartmentService{
 	// Tạo 1 phòng ban mới và lưu vào file
 	@Override
 	public void create(Department department) {
-		departments = FileService.readDepartmentList();
-		departments.add(department);
-		FileService.writeDepartmentList(departments);
+//		List<Object> objects = fileService.readToFile();
+//		for (Object o : objects) {
+//			if (o instanceof Department) {
+//				departments.add(o);
+//			}
+//		}
+//		
+//		departments.add(department);
+//		fileService.writeToFile(departments);
+		
+		objects = fileService.readToFile();
+		objects.add(department);
+		fileService.writeToFile(objects);
 	}
 
 	@Override
@@ -77,7 +89,7 @@ public class DepartmentServiceImpl implements IDepartmentService{
 			System.out.println("Enter new name");
 			String name = new Scanner(System.in).nextLine().toUpperCase();
 			d.setName(name);
-			FileService.writeDepartmentList(departments);
+			fileService.writeToFile(objects);
 			return true;
 		}
 		
@@ -91,26 +103,32 @@ public class DepartmentServiceImpl implements IDepartmentService{
 			System.out.println("Does not exist the department with the id number: " + id);
 			return false;
 		} else {
-			departments.remove(d);
-			FileService.writeDepartmentList(departments);
+			objects.remove(d);
+			fileService.writeToFile(objects);
 			return true;
 		}
 	}
 
-	// Lấy ra danh sách tất cả các phòng ban
+	// Lọc danh sách phòng ban trong file danh sách các đối tượng
 	@Override
 	public List<Department> readAll() {
-		departments = FileService.readDepartmentList();
+		objects = fileService.readToFile();
+		List<Department> departments = new ArrayList<>();
+		for (Object o : objects) {
+			if (o instanceof Department) {
+				departments.add((Department) o);
+			}
+		}
 		return departments;
 	}
 
 	// Tìm kiếm phòng ban theo tên, phòng ban có thể có tên trùng nhau
 	@Override
 	public List<Department> searchByName(String name) {
+		List<Department> departments = readAll();
 		List<Department> departments2 = new ArrayList<>();
-		departments = FileService.readDepartmentList();
 		for (Department d : departments) {
-			if (name.equals(d.getName().toLowerCase())) {
+			if (name.equals(d.getName().toUpperCase())) {
 				departments2.add(d);
 			}
 		}
@@ -121,7 +139,7 @@ public class DepartmentServiceImpl implements IDepartmentService{
 	// Tìm kiếm phòng ban theo id, mỗi phingf ban có 1 id duy nhất
 	@Override
 	public Department searchById(int id) {
-		departments = FileService.readDepartmentList();
+		List<Department> departments = readAll();
 		for (Department d : departments) {
 			if (id == d.getId()) {
 				return d;
@@ -129,5 +147,10 @@ public class DepartmentServiceImpl implements IDepartmentService{
 		}
 		return null;
 	}
+	
+	
+//	public List<Department> findDepartmentList() {
+//		
+//	}
 
 }
