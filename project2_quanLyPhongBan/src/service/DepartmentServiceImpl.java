@@ -1,21 +1,18 @@
 package service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import model.Department;
+import model.Employee;
+import repository.DepartmentRepoImpl;
+import repository.IDepartmentRepo;
 
 public class DepartmentServiceImpl implements IDepartmentService{
 	
-	private IFileService fileService = new FileServiceImpl();
-
-	private  List<Object> objects;
-	
-	// Bổ sung hàm khởi tạo ở đây để khi mới đầu chạy app, đọc luôn danh sách department từ file ra
-//	public DepartmentServiceImpl() {
-//		this.departments = FileService.readDepartmentList();
-//	}
+	IDepartmentRepo departmentRepo = new DepartmentRepoImpl();
 	
 	// Nhập thông tin cho phòng ban
 	@Override
@@ -23,29 +20,31 @@ public class DepartmentServiceImpl implements IDepartmentService{
 		
 		Department department = new Department();
 		System.out.println("----Enter infomation of Department-----");
+		
+		// Nhập d khi database trường id không để tự tăng
 		// bổ sung bắt ngoại lệ nhập id chỉ được nhập số
-		while (true) {
-			try {
-				System.out.println("Enter id: ");
-				int id = new Scanner(System.in).nextInt();
-				
-				// Không cho phép nhạp id trùng với id đã tồn tại
-				Department d = searchById(id);
-				if (d == null) {
-					department.setId(id);
-					break;
-					
-				} else {
-					System.out.println("The id already exists, please enter again!");
-					continue;
-				}
-				
-				
-				
-			} catch(Exception e) {
-				System.out.println("Only numbers are allowed for id, please enter again!");
-			}
-		}
+//		while (true) {
+//			try {
+//				System.out.println("Enter id: ");
+//				int id = new Scanner(System.in).nextInt();
+//				
+//				
+//				Department d = searchById(id);
+//				if (d == null) {
+//					department.setId(id);
+//					break;
+//					
+//				} else {
+//					System.out.println("The id already exists, please enter again!");
+//					continue;
+//				}
+//				
+//				
+//				
+//			} catch(Exception e) {
+//				System.out.println("Only numbers are allowed for id, please enter again!");
+//			}
+//		}
 		
 		System.out.println("Enter name: ");
 		department.setName(new Scanner(System.in).nextLine().toUpperCase());
@@ -59,26 +58,20 @@ public class DepartmentServiceImpl implements IDepartmentService{
 		System.out.println(department);
 	}
 
-	// Tạo 1 phòng ban mới và lưu vào file
+	
 	@Override
 	public void create(Department department) {
-//		List<Object> objects = fileService.readToFile();
-//		for (Object o : objects) {
-//			if (o instanceof Department) {
-//				departments.add(o);
-//			}
-//		}
-//		
-//		departments.add(department);
-//		fileService.writeToFile(departments);
-		
-		objects = fileService.readToFile();
-		objects.add(department);
-		fileService.writeToFile(objects);
+		try {
+			departmentRepo.create(department);
+			System.out.println("Create Success!");
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
 	}
 
 	@Override
-	public boolean update(int id) {
+	public boolean  update(int id) throws SQLException {
 		Department d = searchById(id);
 		if (d == null) {
 			System.out.println("Does not exist the department with the id number: " + id);
@@ -89,68 +82,45 @@ public class DepartmentServiceImpl implements IDepartmentService{
 			System.out.println("Enter new name");
 			String name = new Scanner(System.in).nextLine().toUpperCase();
 			d.setName(name);
-			fileService.writeToFile(objects);
-			return true;
+			
+			return departmentRepo.update(d);
 		}
 		
 		
 	}
 
 	@Override
-	public boolean delete(int id) {
-		Department d = searchById(id);
-		if (d == null) {
-			System.out.println("Does not exist the department with the id number: " + id);
-			return false;
-		} else {
-			objects.remove(d);
-			fileService.writeToFile(objects);
-			return true;
-		}
+	public boolean delete(int id) throws SQLException {
+		
+		return departmentRepo.delete(id);
 	}
 
-	// Lọc danh sách phòng ban trong file danh sách các đối tượng
+	
 	@Override
-	public List<Department> readAll() {
-		objects = fileService.readToFile();
-		List<Department> departments = new ArrayList<>();
-		for (Object o : objects) {
-			if (o instanceof Department) {
-				departments.add((Department) o);
-			}
-		}
-		return departments;
+	public List<Department> readAll() throws SQLException {
+		
+		return departmentRepo.readAll();
 	}
 
 	// Tìm kiếm phòng ban theo tên, phòng ban có thể có tên trùng nhau
 	@Override
-	public List<Department> searchByName(String name) {
-		List<Department> departments = readAll();
-		List<Department> departments2 = new ArrayList<>();
-		for (Department d : departments) {
-			if (name.equals(d.getName().toUpperCase())) {
-				departments2.add(d);
-			}
-		}
-		return departments2;
+	public List<Department> searchByName(String name) throws SQLException {
+		
+		return departmentRepo.searchByName(name);
 	}
 
 	
 	// Tìm kiếm phòng ban theo id, mỗi phingf ban có 1 id duy nhất
 	@Override
-	public Department searchById(int id) {
-		List<Department> departments = readAll();
-		for (Department d : departments) {
-			if (id == d.getId()) {
-				return d;
-			}
-		}
-		return null;
+	public Department searchById(int id) throws SQLException {
+		
+		return departmentRepo.searchById(id);
 	}
 	
-	
-//	public List<Department> findDepartmentList() {
-//		
-//	}
+	@Override
+	public List<Employee> searchEmployeeOfDepartment(int DeptId) throws SQLException {
+		
+		return departmentRepo.searchEmployeeOfDepartment(DeptId);
+	}
 
 }

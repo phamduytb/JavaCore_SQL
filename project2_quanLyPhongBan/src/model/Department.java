@@ -2,7 +2,8 @@ package model;
 
 import java.io.Serializable;
 
-public class Department implements Serializable{
+//JDBC
+public class Department {
 	private int id;
 	private String name;
 	

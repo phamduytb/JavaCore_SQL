@@ -1,5 +1,6 @@
 package main;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -19,8 +20,8 @@ public class EmployeeMain {
 			System.out.println("-----------Menu Employee--------");
 			System.out.println("1. Create employee");
 			System.out.println("2. Read all employee");
-			System.out.println("3. Serach employee by id");
-			System.out.println("4. Serach employee by name");
+			System.out.println("3. Search employee by id");
+			System.out.println("4. Search employee by name");
 			System.out.println("5. Update name employee");
 			System.out.println("6. Delete employee by id");
 			System.out.println("7.Exit");
@@ -30,9 +31,16 @@ public class EmployeeMain {
 			switch (choice) {
 				case 1:
 					//Create
-					Employee employee = employeeService.input();
-					employeeService.create(employee);
-					break;
+					
+					try {
+						Employee employee = employeeService.input();
+						employeeService.create(employee);
+						break;
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
 				
 				case 2:
 					// readAll
@@ -58,6 +66,8 @@ public class EmployeeMain {
 					// Xóa theo id
 					delete();
 					break;
+					
+				
 				case 7:
 					// exit
 					System.out.println("-----------Exit-------------");
@@ -73,67 +83,102 @@ public class EmployeeMain {
 			}
 		}
 	}
+	
 	private static void delete() {
 		System.out.println("Enter the number id of employee to be deleted");
 		int id = new Scanner(System.in).nextInt();
-		boolean de =  employeeService.delete(id);
-		if (de) {
-			System.out.println("Delete successful!!!");
-		} else {
-			System.out.println("Delete fail!!!");
+		boolean de;
+		try {
+			de = employeeService.delete(id);
+			if (de) {
+				System.out.println("Delete successful!!!");
+			} else {
+				System.out.println("Delete fail!!!");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 		
 	}
 	private static void update() {
 		System.out.println("--Enter the number id of employee to be updated---");
 		int id = new Scanner(System.in).nextInt();
-		boolean ud = employeeService.update(id);
-		
-		if (ud == false) {
-			System.out.println("Update fail!!!");
-		} else {
-			
-			System.out.println("Update successful!!!");
+		boolean ud;
+		try {
+			ud = employeeService.update(id);
+			if (ud == false) {
+				System.out.println("Update fail!!!");
+			} else {
+				
+				System.out.println("Update successful!!!");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
+		
 	}
 	private static void searchByName() {
 		System.out.println("--Enter name of employee---");
 		String name = new Scanner(System.in).nextLine().toUpperCase();
-		List<Employee> employees = employeeService.searchByName(name);
-		if (employees.size() == 0) {
-			System.out.println("Does not exist the employee with name: " + name);
-		} else {
-			System.out.println("List of employees with name " + name + " :");
-			for (Employee e : employees) {
-				employeeService.info(e);
+		
+		try {
+			List<Employee> employees = employeeService.searchByName(name);
+			if (employees.size() == 0) {
+				System.out.println("Does not exist the employee with name: " + name);
+			} else {
+				System.out.println("List of employees with name " + name + " :");
+				for (Employee e : employees) {
+					employeeService.info(e);
+				}
 			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
+		
 		
 	}
 	private static void searchById() {
 		System.out.println("--Enter the id number of employee---");
 		int id = new Scanner(System.in).nextInt();
-		Employee employee = employeeService.searchById(id);
-		if (employee == null) {
-			System.out.println("Does not exist the employee with the id number: " + id);
-		} else {
-			System.out.println("The employee with the id number " + id + " : ");
-			employeeService.info(employee);
-			
+		
+		try {
+			Employee employee = employeeService.searchById(id);
+			if (employee == null) {
+				System.out.println("Does not exist the employee with the id number: " + id);
+			} else {
+				System.out.println("The employee with the id number " + id + " : ");
+				employeeService.info(employee);
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 		
 	}
 	private static void readAll() {
 		List<Employee> employees = new ArrayList<>();
-		employees = employeeService.readAll();
-		
-		if (employees.size() > 0) {
-			System.out.println("---List of employee---");
-			for (Employee d : employees) {
-				employeeService.info(d);
+		try {
+			employees = employeeService.readAll();
+			if (employees.size() > 0) {
+				System.out.println("---List of employee---");
+				for (Employee d : employees) {
+					employeeService.info(d);
+				}
+			} else {
+				System.out.println("List of empty employees");
 			}
-		} else {
-			System.out.println("List of empty employees");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
+		
 	}
 }

@@ -1,8 +1,8 @@
 package model;
 
-import java.io.Serializable;
 
-public class Employee implements Serializable{
+
+public class Employee {
 	private int id;
 	private String name;
 	private int age;
@@ -31,6 +31,10 @@ public class Employee implements Serializable{
 	}
 	public void setDepartment(Department department) {
 		this.department = department;
+	}
+	@Override
+	public String toString() {
+		return "Employee [id=" + id + ", name=" + name + ", age=" + age + "]";
 	}
 	
 	
