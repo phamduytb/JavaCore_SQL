@@ -13,16 +13,11 @@ public class MainTest {
 	 */
 	
 	public static void main(String[] args) {
-		Random random = new Random();
-		
-		for (int i = 0; i < 3; i++) {
-			
-			int num = random.nextInt(100);
-			
-			checkNumber(num);
-		}
-		System.out.println("The end!");
-		
+		double a = 10000000;
+		double b = 100;
+		System.out.printf("a = %.2f\nb = %.1f\n", a, b);
+		System.out.println("a = " + String.format("%.1f", a));
+		System.out.println("b= " + b);
 	}
 
 	private static void checkNumber(int num) {

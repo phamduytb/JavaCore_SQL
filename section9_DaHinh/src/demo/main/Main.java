@@ -1,5 +1,7 @@
 package demo.main;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import demo.model.Person;
@@ -9,27 +11,32 @@ import demo.model.Teacher;
 public class Main {
 	public static void main(String[] args) {
 		
+		
 		Teacher t = new Teacher();
 		// đa hình, new thằng nào gọi hàm thằng đấy
 		Person p = new Teacher(); 	// upcasting
 		Person p1 = new Student();
 		Object o = new Teacher();
 		
-		p1.getDemo();
 		//Su dung
-		p.input();// runtime: teacher- | Khi code(compiletime) gọi input của Person, khi chạy(runtime) gọi input của Teacher
-		
-		p1.input();
-		
-		print(p);
-		print(p1);
+		//p.input();// runtime: teacher- | Khi code(compiletime) gọi input của Person, khi chạy(runtime) gọi input của Teacher
 		
 		//o.input();// o không có hàm input nên khi code(compiletime) không gọi được input
+		
+		List<Person> persons = new ArrayList<>();
+		enter(p1);
+		enter(p);
+		persons.add(p1);
+		persons.add(p);
+		for (Person person : persons) {
+			print(person);
+		}
 	}
 	
 	// áp dụng: Viết 1 hàm in để dùng cho nhiều đối tượng khác nhau
 	public static void print(Person p) {
-		
+		System.out.println(p.getId());
+		System.out.println(p.getName());
 		
 		// ép kiểu
 		if (p instanceof Teacher) {

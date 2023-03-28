@@ -31,7 +31,7 @@ public class MainFile {
 		
 		try {
 			FileOutputStream fileOutputStream = new FileOutputStream(file);
-			String s = "Hello";
+			String s = "Hello 123";
 			
 			// Chuyển chuỗi thành mảng byte để ghi vào file
 			byte[] keycodes = s.getBytes();
@@ -62,10 +62,12 @@ public class MainFile {
 			
 			try {
 				FileInputStream  fileInputStream = new FileInputStream(file);
+				
+				//Đọc từng byte ra
 				int c = fileInputStream.read();
 				
 				while (c != -1) {
-					System.out.print((char) c);
+					System.out.print( (char) c);
 					c = fileInputStream.read();
 				}
 			} catch (FileNotFoundException e) {

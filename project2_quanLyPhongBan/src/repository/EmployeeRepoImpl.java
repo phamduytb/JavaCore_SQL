@@ -28,18 +28,8 @@ public class EmployeeRepoImpl implements IEmployeeRepo{
 		ResultSet rs = statement.executeQuery();
 		
 		while (rs.next()) {
-			Employee employee = new Employee();
-			employee.setId(rs.getInt("id"));
-			employee.setName(rs.getString("name"));
-			employee.setAge(rs.getInt("age"));
 			
-			
-			Department department = new Department();
-			department.setId(rs.getInt("DeptId"));
-			department.setName(rs.getString("DeptName"));
-			employee.setDepartment(department);
-			
-			employees.add(employee);
+			employees.add(rowMapper(rs));
 		}
 		return employees;
 	}
@@ -56,24 +46,13 @@ public class EmployeeRepoImpl implements IEmployeeRepo{
 		
 		PreparedStatement statement = conn.prepareStatement(sql);
 		
-		statement.setString(1, name);
+		statement.setString(1, "%" + name + "%");
 		
 		ResultSet rs = statement.executeQuery();
 		
 		while (rs.next()) {
-			Employee employee = new Employee();
-			employee.setId(rs.getInt("id"));
-			employee.setName(rs.getString("name"));
-			employee.setAge(rs.getInt("age"));
-			
-			//set department cho Employee
-			Department department = new Department();
-			department.setId(rs.getInt("DeptId"));
-			department.setName(rs.getString("DeptName"));
-			
-			employee.setDepartment(department);
-			
-			employees.add(employee);
+
+			employees.add(rowMapper(rs));
 		}
 		return employees;
 	}
@@ -96,17 +75,9 @@ public class EmployeeRepoImpl implements IEmployeeRepo{
 		
 		while (rs.next()) {
 			
-			employee.setId(rs.getInt("id"));
-			employee.setName(rs.getString("name"));
-			employee.setAge(rs.getInt("age"));
-			
-			//set department cho Employee
-			Department department = new Department();
-			department.setId(rs.getInt("DeptId"));
-			department.setName(rs.getString("DeptName"));
-			employee.setDepartment(department);
-			return employee;
+			rowMapper(rs);
 		}
+		
 		return null;
 	}
 
@@ -155,6 +126,21 @@ public class EmployeeRepoImpl implements IEmployeeRepo{
 		return statement.executeUpdate() > 0;
 	}
 
+//	-----Hàm dùng chung để đọc employee từ bảng select ra-----
+	private Employee rowMapper(ResultSet rs) throws SQLException {
+		Employee employee = new Employee();
+		employee.setId(rs.getInt("id"));
+		employee.setName(rs.getString("name"));
+		employee.setAge(rs.getInt("age"));
+		
+		//set department cho Employee
+		Department department = new Department();
+		department.setId(rs.getInt("DeptId"));
+		department.setName(rs.getString("DeptName"));
+		
+		employee.setDepartment(department);
+		return employee;
+	}
 	
 
 }

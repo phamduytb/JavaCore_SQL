@@ -103,8 +103,21 @@ public class EmployeeMain {
 		
 	}
 	private static void update() {
-		System.out.println("--Enter the number id of employee to be updated---");
-		int id = new Scanner(System.in).nextInt();
+		int id;
+		while (true) {
+			try {
+				System.out.println("--Enter the number id of employee to be updated---");
+				
+				id = new Scanner(System.in).nextInt();
+				
+				break;
+				
+			} catch(Exception e) {
+				System.out.println("Only numbers are allowed for id, please enter again!");
+			}
+			
+		}
+		
 		boolean ud;
 		try {
 			ud = employeeService.update(id);
@@ -143,8 +156,20 @@ public class EmployeeMain {
 		
 	}
 	private static void searchById() {
-		System.out.println("--Enter the id number of employee---");
-		int id = new Scanner(System.in).nextInt();
+		int id;
+		while (true) {
+			try {
+				System.out.println("--Enter the number id of employee to be updated---");
+				
+				id = new Scanner(System.in).nextInt();
+				
+				break;
+				
+			} catch(Exception e) {
+				System.out.println("Only numbers are allowed for id, please enter again!");
+			}
+			
+		}
 		
 		try {
 			Employee employee = employeeService.searchById(id);

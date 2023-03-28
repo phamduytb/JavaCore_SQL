@@ -27,5 +27,9 @@ public class JDBCConnection {
 		return null;
 		
 	}
+	
+	public static void main(String[] args) {
+		getConnection();
+	}
 
 }

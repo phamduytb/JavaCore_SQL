@@ -11,34 +11,33 @@ import repository.EmployeeRepoImpl;
 import repository.IEmployeeRepo;
 
 public class EmployeeServiceImpl implements IEmployeeService{
+	
 	IDepartmentService departmentService = new DepartmentServiceImpl();
 	
 	IEmployeeRepo employeeRepo = new EmployeeRepoImpl();
 	
 	// Lựa chọn phòng ban cho nhân viên
 	@Override
-	public void choiceDepartment(Employee e) throws SQLException {
-		System.out.println("---List of department---");
-		List<Department> departments = departmentService.readAll();
-		for (Department d : departments) {
-			System.out.println(d);
-		}
-		boolean exit = false;
+	public void choiceDepartment(Employee employee) throws SQLException {
 		while (true) {
-			System.out.println("---Choice department, please choice the number id of department---");
-			int id = new Scanner(System.in).nextInt();
-			for (Department d : departments) {
-				if (d.getId() == id) {
-					e.setDepartment(d);
-					exit = true;
+			try {
+				System.out.println("Enter department id: ");
+				
+				int id = new Scanner(System.in).nextInt();
+				
+				Department department = departmentService.searchById(id);
+				
+				if (department != null) {
+					employee.setDepartment(department);
 					break;
+				} else {
+					System.out.println("Not exist department with id = " + id);
 				}
+				
+			} catch(Exception e) {
+				System.out.println("Only numbers are allowed for id, please enter again!");
 			}
-			if (!exit) {
-				System.out.println("The number id: " + id + " of Department does not exist, please choice department again!!!");
-			} else {
-				break;
-			}
+			
 		}
 		
 		
@@ -49,34 +48,27 @@ public class EmployeeServiceImpl implements IEmployeeService{
 		Employee employee = new Employee();
 		System.out.println("----Enter infomation of Employee-----");
 		
-//		while (true) {
-//			try {
-//				System.out.println("Enter id: ");
-//				int id = new Scanner(System.in).nextInt();
-//				
-//				// Không cho phép nhạp id trùng với id đã tồn tại
-//				Employee em = searchById(id);
-//				if (em == null) {
-//					employee.setId(id);
-//					break;
-//					
-//				} else {
-//					System.out.println("The id already exists, please enter again!");
-//					continue;
-//				}
-//				
-//				
-//				
-//			} catch(Exception e) {
-//				System.out.println("Only numbers are allowed for id, please enter again!");
-//			}
-//		}
-		
 		System.out.println("Enter name: ");
 		employee.setName(new Scanner(System.in).nextLine().toUpperCase());
-		System.out.println("Enter age: ");
-		employee.setAge(new Scanner(System.in).nextInt());
+		
+		while (true) {
+			try {
+				System.out.println("Enter age: ");
+				
+				int age = new Scanner(System.in).nextInt();
+				
+				employee.setAge(new Scanner(System.in).nextInt());
+				break;
+				
+			} catch(Exception e) {
+				System.out.println("Only numbers are allowed for id, please enter again!");
+			}
+			
+		}
+		
+		
 		choiceDepartment(employee);
+		
 		return employee;
 	}
 
