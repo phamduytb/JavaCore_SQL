@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import model.Bill;
+import model.Category;
 import model.Product;
 import service.BillImpl;
 import service.IBill;
@@ -27,9 +28,12 @@ public class BillMenu {
 			System.out.println("-------------------------------------");
 			System.out.println("---Bill Menu---");
 			System.out.println("1. Create bill");
-			System.out.println("2. Search All Bill");
-			System.out.println("3. Search Bill by buy date");
-			System.out.println("4. Exit");
+			System.out.println("2. Update product quantity of bill");
+			System.out.println("3. Delete bill");
+			System.out.println("4. Search All Bill");
+			System.out.println("5. Search Bill by buy date");
+			System.out.println("6. Search Bill by id");
+			System.out.println("7. Exit");
 			
 			System.out.println("---Your choice---");
 			int choice = ValidateData.validateInteger();
@@ -39,15 +43,27 @@ public class BillMenu {
 					create();
 					break;
 					
-				case 2:
-					readAll();
+				case 2: 
+					update();
 					break;
 					
-				case 3: 
-					searchByDate();
+				case 3:
+					delete();
 					break;
 					
 				case 4:
+					readAll();
+					break;
+					
+				case 5: 
+					searchByDate();
+					break;
+					
+				case 6:
+					searchById();
+					break;
+					
+				case 7:
 					exit = true;
 					break;
 					
@@ -61,6 +77,26 @@ public class BillMenu {
 			}
 		}
 	}
+
+	
+
+	private static void searchById() {
+		
+		Bill bill = new Bill();
+		
+		System.out.println("Enter the id number of bill to find: ");
+		
+		int id = ValidateData.validateInteger();
+		bill = iBill.searchById(id);
+		if (bill == null) {
+			System.out.println("No exist bill with the id number = " + id);
+		} else {
+			System.out.println("The infomation of bill with the id number: " + id);
+			bill.info();
+		}
+	}
+
+
 
 	private static void searchByDate() throws ParseException {
 		
@@ -112,9 +148,52 @@ public class BillMenu {
 		
 		Product product = bill.getProduct();
 		
+		//update số lương product sau khi tạo bill
 		product.setProductQuantity(product.getProductQuantity() - bill.getProductQuantity());
 		
 		System.out.println("Update product quantity after create bill");
 		iProduct.update(product);
+	}
+	
+	private static void delete() {
+		
+		System.out.println("---Delete bill---");
+		 System.out.println("Enter the id number of bill to deleted");
+		 int id = ValidateData.validateInteger();
+		 Bill bill = iBill.searchById(id);
+		 if (bill == null) {
+			System.out.println("No exits bill with the id number: " + id );
+		} else {
+			System.out.println("The infomation of bill to deleted: ");
+			bill.info();
+			
+			iBill.delete(id);
+		}
+	}
+
+	private static void update() throws ParseException {
+		
+		System.out.println("---Update Bill---");
+		
+		System.out.println("Enter the id number of bill to updated");
+		
+		int id = ValidateData.validateInteger();
+		
+		Bill bill = iBill.searchById(id);
+		
+		 if (bill == null) {
+				System.out.println("No exits bill with the id number: " + id );
+			} else {
+				
+				System.out.println("The infomation of bill to updated: ");
+				
+				bill.info();
+				
+				bill.inputUpdate();
+				
+				iBill.update(bill);
+			}
+		
+		
 	}
 }

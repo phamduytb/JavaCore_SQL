@@ -25,6 +25,43 @@ public class BillImpl implements IBill{
 			System.out.println("Create bill faild!");
 		}
 	}
+	
+	@Override
+	public void update(Bill bill) {
+		
+		try {
+			billDao.update(bill);
+			System.out.println("Update bill success!");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Update bill faild!");
+		}
+	}
+
+	@Override
+	public void delete(int id) {
+		
+		try {
+			billDao.delete(id);
+			System.out.println("Delete bill success!");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Delete bill faild!");
+		}
+	}
+	
+	@Override
+	public Bill searchById(int id) {
+		try {
+			return billDao.searchById(id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	@Override
 	public List<Bill> searchByDate(Date start, Date end) {
@@ -51,5 +88,9 @@ public class BillImpl implements IBill{
 		
 		return new ArrayList<>();
 	}
+
+	
+
+	
 
 }

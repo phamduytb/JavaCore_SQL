@@ -15,9 +15,9 @@ public interface ProductDao {
 	
 	List<Product> readAll() throws SQLException ;
 	
-	List<Product> searchByName(String name) throws SQLException ;
+	List<Product> searchByName(String name) throws SQLException;
 	
-	Product searchById(int id) throws SQLException ;
+	Product searchById(int id) throws SQLException;
 	
 	List<Product> searchByPrice(double min,double max) throws SQLException;
 	

@@ -1,6 +1,7 @@
 package main;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -88,6 +89,12 @@ public class ProductMenu {
 }
 	
 	private static void choiceCategoryForProduct(Product product) {
+		System.out.println("List of category");
+		List<Category> categories = iCategory.readAll();
+		for (Category c : categories) {
+			c.info();
+		}
+		System.out.println("Choice category for product, please enter the id number of category:");
 		while (true) {
 			int id = ValidateData.validateInteger();
 			Category category = iCategory.searchById(id);
@@ -107,11 +114,8 @@ public class ProductMenu {
 		System.out.println("---create product----");
 		product.input();
 		List<Category> categories = iCategory.readAll();
-		System.out.println("List of categorys: ");
-		for (Category c : categories) {
-			c.info();
-		}
-		System.out.println("Choice category for product, please enter the id number of category:");
+		
+		
 		choiceCategoryForProduct(product);
 		
 		iProduct.create(product);

@@ -13,7 +13,7 @@ public class Bill {
 	
 	private int billId;
 	private int productQuantity;
-	private double productPrice;
+	private double productPrice; // Giá lúc mua
 	private Date buyDate;
 	private Product product;
 	
@@ -71,7 +71,7 @@ public class Bill {
 				System.out.println("No exist product with the id number: " + id + " , please re-enter:");
 			} else {
 				this.product = product;
-				System.out.println("Enter the product quantity");
+				System.out.println("Enter the product quantity want buy: ");
 				while (true) {
 					int quantity = ValidateData.validateInteger();
 					if (quantity <= product.getProductQuantity()) {
@@ -93,14 +93,50 @@ public class Bill {
 		
 	}
 	
+	public void inputUpdate() {
+		
+		Product product = iProduct.searchById(this.getProduct().getProductId());
+		
+		//trả lại sô sluowng product trước khi tạo bill
+		product.setProductQuantity(product.getProductQuantity() + this.productQuantity);
+		
+		System.out.println("Update the product quantity want buy: ");
+		while (true) {
+			// Cập nhật số lượng sản phẩm cho hóa đơn
+			int quantity = ValidateData.validateInteger();
+			
+			if (quantity <= product.getProductQuantity()) {
+				
+				this.productQuantity = quantity;
+				
+				// trả lại số lượng product sau khi update bill
+				product.setProductQuantity(product.getProductQuantity() - this.getProductQuantity());
+				
+				System.out.println("Update product quantity after update bill");
+				
+				iProduct.update(product);
+				
+				break;
+			} else {
+				System.out.println("Not enough quantity, re-enter <= " + product.getProductQuantity() );
+			}
+			
+		}
+		
+		this.setProduct(product);
+		
+	}
+	
 	public void info() {
 		
-		System.out.println("id: " + billId + " |productId:" + product.getProductId() + " |Product'price: " 
-				
-							+  String.format("%.2f", productPrice)+ " |Product'quantity: " + productQuantity 
+		System.out.println("BillId: " + billId + " |productId:" + product.getProductId() + " |product'name: " + product.getProductName()
+						
+						+ " |Product'price: " 	+  String.format("%.2f", productPrice)+ " |Product'quantity: " + productQuantity 
 							
-							+  " |buy date: " + new SimpleDateFormat("dd/MM/yyyy").format(buyDate) 
+						+  " |buy date: " + new SimpleDateFormat("dd/MM/yyyy").format(buyDate) 
 							
-							+ " |price total:" + String.format("%.2f", productPrice * productQuantity));
+						+ " |price total:" + String.format("%.2f", productPrice * productQuantity));
 	}
+
+	
 }

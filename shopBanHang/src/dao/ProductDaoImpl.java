@@ -19,7 +19,7 @@ public class ProductDaoImpl implements ProductDao{
 		
 		String sql = "INSERT INTO product(productName, productQuantity, productPrice, categoryId) "
 				+ "VALUES(?, ?, ?, ?)";
-		
+		 
 		Connection connection = JDBCConection.getConnection();
 		
 		PreparedStatement statement = connection.prepareStatement(sql);

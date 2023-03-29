@@ -34,13 +34,76 @@ public class BillDaoImpl implements BillDao{
 
 		statement.executeUpdate();
 	}
+	
+	@Override
+	public void update(Bill bill) throws SQLException {
+		
+		String sql = " UPDATE bill SET productId = ?, productPrice = ?, "
+				+ " productQuantity = ?, buyDate = ?"
+				+ " WHERE billId = ?";
+				
+
+		Connection connection = JDBCConection.getConnection();
+
+		PreparedStatement statement = connection.prepareStatement(sql);
+
+		statement.setInt(1, bill.getProduct().getProductId());
+		
+		statement.setDouble(2, bill.getProduct().getProductPrice());
+		
+		statement.setInt(3, bill.getProductQuantity());
+		
+		statement.setDate(4,new  java.sql.Date(bill.getBuyDate().getTime()));
+		
+		statement.setInt(5, bill.getBillId());
+
+		statement.executeUpdate();
+	}
+
+	@Override
+	public void delete(int id) throws SQLException {
+		String sql = "DELETE FROM bill WHERE billId = ?";
+
+		Connection connection = JDBCConection.getConnection();
+
+		PreparedStatement statement = connection.prepareStatement(sql);
+
+		statement.setInt(1, id);
+
+		statement.executeUpdate();
+		
+	}
+	
+	@Override
+	public Bill searchById(int id) throws SQLException {
+		String sql = "SELECT b.*, p.productName FROM  bill b JOIN product p"
+				+ " ON b.productId = p.productId"
+				+ " WHERE billId = ?";
+	
+		Connection connection = JDBCConection.getConnection();
+
+		PreparedStatement statement = connection.prepareStatement(sql);
+	
+		statement.setInt(1, id);
+		
+		ResultSet rs = statement.executeQuery();
+	
+		while (rs.next()) {
+			return readBillFromDB(rs);
+		}
+	
+		return null;
+	}
 
 	@Override
 	public List<Bill> searchByDate(Date start, Date end) throws SQLException {
 		
 		List<Bill> bills = new ArrayList<>();
 		
-		String sql = "SELECT * FROM  bill WHERE buyDate >= ? AND buyDate <= ?";
+		String sql = "SELECT b.*, p.productName FROM  bill b JOIN product p"
+				+ " ON b.productId = p.productId "
+				+ " WHERE buyDate >= ? AND buyDate <= ?"
+				+ " ORDER BY buyDate DESC";
 		
 		Connection connection = JDBCConection.getConnection();
 
@@ -61,9 +124,12 @@ public class BillDaoImpl implements BillDao{
 
 	@Override
 	public List<Bill> readAll() throws SQLException {
-List<Bill> bills = new ArrayList<>();
 		
-		String sql = "SELECT * FROM  bill ";
+		List<Bill> bills = new ArrayList<>();
+		
+		String sql = "SELECT b.*, p.productName FROM  bill b JOIN product p"
+					+ " ON b.productId = p.productId"
+					+ " ORDER BY buyDate DESC";
 		
 		Connection connection = JDBCConection.getConnection();
 
@@ -87,13 +153,23 @@ List<Bill> bills = new ArrayList<>();
 		bill.setProductQuantity(rs.getInt("productQuantity"));
 		bill.setBuyDate(rs.getDate("buyDate"));
 		
-		int productId = rs.getInt("productId");
-		
-		Product product = productDao.searchById(productId);
+		Product product = new Product();
+		product.setProductId(rs.getInt("productId"));
+		product.setProductName(rs.getString("productName"));
 		
 		bill.setProduct(product);
 		
 		return bill;
 	}
+
+	@Override
+	public List<Bill> searchByProduct(int id) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+	
 
 }
