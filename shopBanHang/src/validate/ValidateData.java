@@ -42,11 +42,18 @@ public class ValidateData {
 	
 	// enter buy date
 	public static Date validateDate() throws ParseException {
+		 try {
+			 System.out.println("Enter buy date with fomat (dd/MM/yyyy)");
+				
+			 String date = ValidateData.validateString();
+				
+			return new SimpleDateFormat("dd/MM/yyyy").parse(date);
+			
+		 } catch(Exception e) {
+			 e.printStackTrace();
+			 System.out.println("re-enter");
+		 }
+		return null;
 		
-		System.out.println("Enter buy date with fomat (dd/MM/yyyy)");
-		
-		String date = ValidateData.validateString();
-		
-		return new SimpleDateFormat("dd/MM/yyyy").parse(date);
 	}
 }

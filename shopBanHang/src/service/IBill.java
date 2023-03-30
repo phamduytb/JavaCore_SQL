@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import model.Bill;
+import model.ReportBill;
 
 public interface IBill {
 	
@@ -19,4 +20,19 @@ public interface IBill {
 	List<Bill> searchByDate(Date start, Date end);
 	
 	List<Bill> readAll();
+	
+	// Thống kê số lượng hóa đơn của của product
+		List<ReportBill> reportBillByProduct() ;
+		
+		// Thống kê đơn hàng theo tháng
+		List<ReportBill> reportBillByMonth() ;
+		
+		//Thống kê đơn hàng theo category
+		List<ReportBill> reportBillByCategory() ;
+		
+		// Tổng tiền hóa đơn theo tháng
+		List<ReportBill> reportMoneyByMonth() ;
+		
+		// Sản phẩm bán chạy theo tháng
+		List<ReportBill> searchPopularProductByMonth(int month) ;
 }

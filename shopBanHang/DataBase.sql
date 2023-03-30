@@ -50,6 +50,7 @@ GROUP BY p.productId;
 --  2.Thống kê số lượng bill theo tháng
 SELECT MONTH(buyDate) AS Month, COUNT(billId) AS total_bill
 FROM bill
+-- WHERE MONTH(buyDate) = 4
 GROUP BY MONTH(buyDate);
 
 -- 3.Thống kê số lượng bill theo category
@@ -63,7 +64,7 @@ SELECT MONTH(buyDate) AS month, SUM(productQuantity * productPrice) AS total_mon
 FROM bill
 GROUP BY MONTH(buyDate);
 
--- 5. Sản phẩm bán chạy theo tháng
+-- 5. Sản phẩm bán chạy theo tháng,  ???Thêm điều kiện where để xác định trong tháng nào
 -- đưa ra số lượng bán được của các sản phẩm trong tháng
 -- lọc ra sản phẩm có số lượng lớn nhất
 SELECT  MONTH(buyDate) AS month, p.productId, p.productName,  SUM(b.productQuantity) AS total_productBuy

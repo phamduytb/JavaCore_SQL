@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import model.Bill;
+import model.ReportBill;
 
 public interface BillDao {
 
@@ -22,5 +23,19 @@ public interface BillDao {
 	
 	List<Bill> searchByProduct(int id) throws SQLException;
 	
+	// Thống kê số lượng hóa đơn của của product
+	List<ReportBill> reportBillByProduct() throws SQLException;
+	
+	// Thống kê đơn hàng theo tháng
+	List<ReportBill> reportBillByMonth() throws SQLException;
+	
+	//Thống kê đơn hàng theo category
+	List<ReportBill> reportBillByCategory() throws SQLException;
+	
+	// Tổng tiền hóa đơn theo tháng
+	List<ReportBill> reportMoneyByMonth() throws SQLException;
+	
+	// Sản phẩm bán chạy theo tháng
+	List<ReportBill> searchPopularProductByMonth(int month) throws SQLException;
 	
 }

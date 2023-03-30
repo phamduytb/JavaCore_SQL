@@ -7,6 +7,7 @@ import java.util.List;
 import model.Bill;
 import model.Category;
 import model.Product;
+import model.ReportBill;
 import service.BillImpl;
 import service.IBill;
 import service.IProduct;
@@ -33,7 +34,12 @@ public class BillMenu {
 			System.out.println("4. Search All Bill");
 			System.out.println("5. Search Bill by buy date");
 			System.out.println("6. Search Bill by id");
-			System.out.println("7. Exit");
+			System.out.println("7. Report bill by product");
+			System.out.println("8. Report bill by month");
+			System.out.println("9. Report bill by category");
+			System.out.println("10. Report money by month");
+			System.out.println("11. Search popular product by month");
+			System.out.println("12. Exit");
 			
 			System.out.println("---Your choice---");
 			int choice = ValidateData.validateInteger();
@@ -64,11 +70,31 @@ public class BillMenu {
 					break;
 					
 				case 7:
+					reportBillByProduct();
+					break;
+					
+				case 8:
+					reportBillByMonth();
+					break;
+					
+				case 9:
+					reportBillByCategory();
+					break;
+					
+				case 10:
+					reportMoneyByMonth();
+					break;
+					
+				case 11:
+					searchPopularProductByMonth();
+					break;
+					
+				case 12:
 					exit = true;
 					break;
 					
 				default:
-					System.out.println("Only enter the number from 1 to 4, please re-enter!");
+					System.out.println("Only enter the number from 1 to 12, please re-enter!");
 			}
 			
 			if (exit) {
@@ -79,6 +105,87 @@ public class BillMenu {
 	}
 
 	
+
+	private static void searchPopularProductByMonth() {
+		System.out.println("Search popular product by month: ");
+		System.out.println("Enter the month");
+		int month = ValidateData.validateInteger();
+		List<ReportBill> reportBills = iBill.searchPopularProductByMonth(month);
+		
+		if (reportBills.size() == 0) {
+			System.out.println("List empty!!!");
+		} else {
+			for (ReportBill reportBill : reportBills) {
+				System.out.println("month: " + reportBill.getMonth() + " |ProductId: " + reportBill.getProductId() + " |ProductName: " + reportBill.getProductName()
+				+ " |total_product: " + reportBill.getTotal_product());
+			}
+		}
+	}
+
+
+
+	private static void reportMoneyByMonth() {
+		System.out.println("Report money by month: ");
+		List<ReportBill> reportBills = iBill.reportMoneyByMonth();
+		
+		if (reportBills.size() == 0) {
+			System.out.println("List empty!!!");
+		} else {
+			for (ReportBill reportBill : reportBills) {
+				System.out.println("month: " + reportBill.getMonth() + " |total_money: " + String.format("%.2f", reportBill.getTotal_money()));
+			}
+		}
+		
+	}
+
+
+
+	private static void reportBillByCategory() {
+		System.out.println("Report bill by category: ");
+		List<ReportBill> reportBills = iBill.reportBillByCategory();
+		
+		if (reportBills.size() == 0) {
+			System.out.println("List empty!!!");
+		} else {
+			for (ReportBill reportBill : reportBills) {
+				System.out.println(" categoryId: " + reportBill.getCategoryId() +  " |categoryName: " + reportBill.getCategoryName() +  " |totalBill: " + reportBill.gettotalBill());
+			}
+		}
+		
+	}
+
+
+
+	private static void reportBillByMonth() {
+		System.out.println("Report bill by month: ");
+		List<ReportBill> reportBills = iBill.reportBillByMonth();
+		
+		if (reportBills.size() == 0) {
+			System.out.println("List empty!!!");
+		} else {
+			for (ReportBill reportBill : reportBills) {
+				System.out.println(" Month: " + reportBill.getMonth() + " |totalBill: " + reportBill.gettotalBill());
+			}
+		}
+		
+	}
+
+
+
+	private static void reportBillByProduct() {
+		System.out.println("Report bill by product");
+		List<ReportBill> reportBills = iBill.reportBillByProduct();
+		
+		if (reportBills.size() == 0) { 
+			System.out.println("List empty!!!");
+		} else {
+			for (ReportBill reportBill : reportBills) {
+				System.out.println("ProductId: " + reportBill.getProductId() + " |ProductName: " + reportBill.getProductName() + " |totalBill: " + reportBill.gettotalBill());
+			}
+		}
+	}
+
+
 
 	private static void searchById() {
 		

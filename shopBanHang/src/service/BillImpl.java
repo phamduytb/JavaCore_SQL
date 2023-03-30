@@ -8,6 +8,7 @@ import java.util.List;
 import dao.BillDao;
 import dao.BillDaoImpl;
 import model.Bill;
+import model.ReportBill;
 
 public class BillImpl implements IBill{
 	
@@ -86,6 +87,64 @@ public class BillImpl implements IBill{
 			e.printStackTrace();
 		}
 		
+		return new ArrayList<>();
+	}
+
+	@Override
+	public List<ReportBill> reportBillByProduct() {
+		try {
+			return billDao.reportBillByProduct();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<>();
+	}
+
+	@Override
+	public List<ReportBill> reportBillByMonth() {
+		
+		try {
+			return billDao.reportBillByMonth();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<>();
+	}
+
+	@Override
+	public List<ReportBill> reportBillByCategory() {
+		try {
+			return billDao.reportBillByCategory();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<>();
+	}
+
+	@Override
+	public List<ReportBill> reportMoneyByMonth() {
+		// TODO Auto-generated method stub
+		try {
+			return billDao.reportMoneyByMonth();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<>();
+	}
+
+	@Override
+	public List<ReportBill> searchPopularProductByMonth(int month) {
+		// TODO Auto-generated method stub
+		try {
+			return billDao.searchPopularProductByMonth(month);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return new ArrayList<>();
 	}
 
